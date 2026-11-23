@@ -82,6 +82,7 @@ class MainWindow(QMainWindow):
     def slider_method(self):
         value = self.slider.value()
         self.slider_spinbox.setValue(value)
+        self.color_box.setStyleSheet(f'background-color: rgb({value},{value},{value})')
 
 
 if __name__ == "__main__":
