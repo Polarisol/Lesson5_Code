@@ -56,9 +56,10 @@ class MainWindow(QMainWindow):
         main_layout = QHBoxLayout()
         main_layout.addLayout(layout)
         main_layout.addLayout(slider_layout)
-        self.right_label = QLabel()
-        self.right_label.setMinimumWidth(100)
-        main_layout.addWidget(self.right_label)
+        self.color_box = QLabel()
+        self.color_box.setMinimumWidth(100)
+        self.color_box.setStyleSheet('background-color: rgb(0,0,0)')
+        main_layout.addWidget(self.color_box)
 
         central_widget = QWidget()
         central_widget.setLayout(main_layout)
