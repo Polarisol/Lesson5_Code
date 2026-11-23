@@ -51,6 +51,9 @@ class MainWindow(QMainWindow):
     def timer_method(self):
         self.counter += 1
         self.spinbox.setValue(self.counter)
+        if self.counter == 500:
+            self.timer.stop()
+            self.button.setChecked(False)
 
 
 if __name__ == "__main__":
