@@ -10,11 +10,18 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from PySide6.QtCore import QTimer
+
 
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("Lesson 5")
+
+        self.counter = 0
+
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.timer_method)
 
         self.spinbox = QSpinBox()
         self.spinbox.setRange(0, 10000)
@@ -36,6 +43,14 @@ class MainWindow(QMainWindow):
 
     def button_method(self, checked: bool) -> None:
         self.button.setText("Stop" if checked else "Start")
+        if checked:
+            self.timer.start(10)
+        else:
+            self.timer.stop()
+
+    def timer_method(self):
+        self.counter += 1
+        self.spinbox.setValue(self.counter)
 
 
 if __name__ == "__main__":
