@@ -3,14 +3,16 @@ import sys
 from PySide6.QtWidgets import (
     QAbstractSpinBox,
     QApplication,
+    QHBoxLayout,
     QMainWindow,
     QPushButton,
+    QSlider,
     QSpinBox,
     QVBoxLayout,
     QWidget,
 )
 
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import Qt, QTimer
 
 
 class MainWindow(QMainWindow):
@@ -37,8 +39,25 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.spinbox)
         layout.addWidget(self.button)
 
+        self.slider = QSlider(Qt.Orientation.Vertical)
+        self.slider.setRange(0,255)
+        self.slider_spinbox = QSpinBox()
+        self.slider_spinbox.setRange(self.slider.minimum(), self.slider.maximum())
+        self.slider_spinbox.setReadOnly(True)
+        self.slider_spinbox.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+        self.slider_spinbox.setStyleSheet("background-color: lightgray;")
+        self.slider.valueChanged.connect(self.slider_method)
+
+        slider_layout = QVBoxLayout()
+        slider_layout.addWidget(self.slider_spinbox)
+        slider_layout.addWidget(self.slider)
+
+        main_layout = QHBoxLayout()
+        main_layout.addLayout(layout)
+        main_layout.addLayout(slider_layout)
+
         central_widget = QWidget()
-        central_widget.setLayout(layout)
+        central_widget.setLayout(main_layout)
         self.setCentralWidget(central_widget)
 
     def button_method(self, checked: bool) -> None:
@@ -54,6 +73,10 @@ class MainWindow(QMainWindow):
         if self.counter == 500:
             self.timer.stop()
             self.button.setChecked(False)
+
+    def slider_method(self):
+        value = self.slider.value()
+        self.slider_spinbox.setValue(value)
 
 
 if __name__ == "__main__":
